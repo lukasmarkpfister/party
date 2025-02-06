@@ -3,7 +3,7 @@
 import { useEffect, useState } from 'react';
 import { supabase } from '@/lib/supabase';
 import { Button } from '@/components/ui/button';
-import { DragDropContext, Droppable, Draggable } from '@hello-pangea/dnd';
+import { DragDropContext, Droppable, Draggable, DropResult } from '@hello-pangea/dnd';
 
 interface Question {
   id: number;
@@ -129,7 +129,7 @@ export default function QuestionsPage() {
     }
   };
 
-  const handleDragEnd = async (result: any) => {
+  const handleDragEnd = async (result: DropResult) => {
     if (!result.destination) return;
 
     const items = Array.from(questions);
@@ -332,7 +332,10 @@ export default function QuestionsPage() {
 
             <select
               value={newQuestion.type}
-              onChange={(e) => setNewQuestion({ ...newQuestion, type: e.target.value as any })}
+              onChange={(e) => setNewQuestion({ 
+                ...newQuestion, 
+                type: e.target.value as 'scale' | 'text' | 'multiple_choice'
+              })}
               className="block w-full rounded-md border border-gray-300 px-3 py-2"
             >
               <option value="scale">Scale (1-10)</option>
