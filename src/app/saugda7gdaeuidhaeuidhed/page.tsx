@@ -1,1 +1,5 @@
-// Delete this file since we're not using it anymore 
+import { redirect } from 'next/navigation';
+
+export default function Page() {
+  redirect('/saugda7gdaeuidhaeuidhed/questions');
+} 

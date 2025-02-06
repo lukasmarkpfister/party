@@ -194,8 +194,13 @@ export default function QuestionsPage() {
     return Object.entries(grouped);
   };
 
-  // Update the getSortedResponses function
-  const getSortedResponses = () => {
+  // Update the getSortedResponses function with proper return type
+  const getSortedResponses = (): Response[] | Array<[string, { 
+    responses: Response[], 
+    created_at: string,
+    instagram: string,
+    phone_number: string 
+  }]> => {
     const filtered = getFilteredResponses();
     if (selectedQuestion) {
       // When filtering by question, just sort those responses
@@ -212,6 +217,11 @@ export default function QuestionsPage() {
     // When showing all, group by submission
     return groupResponsesBySubmission(filtered)
       .sort((a, b) => new Date(b[1].created_at).getTime() - new Date(a[1].created_at).getTime());
+  };
+
+  // Add a type guard to check if it's a single response
+  const isSingleResponse = (response: Response | [string, { responses: Response[] }]): response is Response => {
+    return 'question_id' in response;
   };
 
   return (
@@ -267,7 +277,8 @@ export default function QuestionsPage() {
             {selectedQuestion ? (
               // Single question view
               <div className="space-y-4">
-                {getSortedResponses().map((response, index) => {
+                {(getSortedResponses() as Response[]).map((response, index) => {
+                  if (!isSingleResponse(response)) return null;
                   const question = questions.find(q => q.id === response.question_id);
                   return (
                     <div key={index} className="p-4 border rounded">
@@ -289,7 +300,12 @@ export default function QuestionsPage() {
             ) : (
               // Grouped by submission view
               <div className="space-y-6">
-                {getSortedResponses().map(([submissionId, submission]) => (
+                {(getSortedResponses() as Array<[string, { 
+                  responses: Response[], 
+                  created_at: string,
+                  instagram: string,
+                  phone_number: string 
+                }]>).map(([submissionId, submission]) => (
                   <div key={submissionId} className="border rounded-lg p-6 bg-gray-50">
                     <div className="mb-4 pb-2 border-b">
                       <p className="text-sm text-gray-500">
