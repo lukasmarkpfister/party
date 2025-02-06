@@ -6,7 +6,7 @@ export default function ThankYouPage() {
       <div className="rounded-lg bg-white p-8 shadow-xl max-w-md mx-auto mt-20 text-center space-y-6">
         <h1 className="text-3xl font-bold">Thank you! 🎉</h1>
         <p className="text-gray-600">
-          Thank you for answering all the questions :) Maybe we'll each other again!
+          Thank you for answering all the questions :) Maybe we&apos;ll see each other again!
         </p>
         
         <div className="pt-4">
