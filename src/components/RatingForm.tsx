@@ -106,10 +106,8 @@ export default function RatingForm() {
                 return;
               }
 
-              alert('Thank you for your feedback!');
-              setResponses({});
-              setContactInfo({ instagram: '', phoneNumber: '' });
-              setCurrentQuestion(0);
+              // Redirect to thank you page instead of showing alert
+              window.location.href = '/thank-you';
             }}
             className="w-full"
           >
