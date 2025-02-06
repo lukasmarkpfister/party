@@ -23,6 +23,7 @@ interface Response {
 }
 
 export default function QuestionsPage() {
+  const [isLoading, setIsLoading] = useState(true);
   const [questions, setQuestions] = useState<Question[]>([]);
   const [newQuestion, setNewQuestion] = useState<{
     text: string;
@@ -40,7 +41,11 @@ export default function QuestionsPage() {
   const [sortOrder, setSortOrder] = useState<'asc' | 'desc'>('desc');
 
   useEffect(() => {
-    fetchQuestions();
+    const init = async () => {
+      await fetchQuestions();
+      setIsLoading(false);
+    };
+    init();
   }, []);
 
   const fetchQuestions = async () => {
@@ -223,6 +228,10 @@ export default function QuestionsPage() {
   const isSingleResponse = (response: Response | [string, { responses: Response[] }]): response is Response => {
     return 'question_id' in response;
   };
+
+  if (isLoading) {
+    return <div className="text-center p-8">Loading...</div>;
+  }
 
   return (
     <div className="rounded-lg bg-white p-6 shadow-xl">
