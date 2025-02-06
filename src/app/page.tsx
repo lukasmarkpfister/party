@@ -8,7 +8,7 @@ export default function Home() {
       {/* Main Content */}
       <div className="rounded-lg bg-white p-6 shadow-xl max-w-2xl mx-auto mt-8">
         <h1 className="mb-6 text-2xl font-bold text-center">
-          Rate Your Party Experience! 🎉
+          Very important survey! 🎉
         </h1>
         
         <RatingForm />
